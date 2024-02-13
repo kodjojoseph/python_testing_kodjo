@@ -58,15 +58,27 @@ def purchasePlaces():
     
     # Vérifiez si le nombre de places disponibles est suffisant
     if int(competition['numberOfPlaces']) < placesRequired :
-        flash("il n'y a pas assez de places disponibles.")
+        flash("pas assez de places disponibles.")
         return render_template('welcome.html', club=club, competitions=competitions)
+    
+    elif int (club ['points']) < placesRequired :
+         flash('il vous manques des points')
+         return render_template('welcome.html', club=club, competitions=competitions)
+
     elif placesRequired > 12:
-        flash('Désolé, pas plus de 12 places.')
+        flash('Désolé,  maximum  12 places.')
         return render_template('welcome.html', club=club, competitions=competitions)
+    
+    elif placesRequired <= 0:
+        flash('Vous pouvez reservez a partie de 1 à 12')
+        return render_template('welcome.html', club=club, competitions=competitions)
+    
+    
+
     
     club ['points'] = int (club ['points']) - placesRequired
     competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
-    flash('Génial !! Vous avez réussi à acheter {} places'.format(placesRequired))
+    flash(' Vous avez acheter {} places'.format(placesRequired))
     return render_template('welcome.html', club=club, competitions=competitions)
 
     
